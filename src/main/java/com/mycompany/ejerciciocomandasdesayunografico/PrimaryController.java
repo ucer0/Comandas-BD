@@ -4,13 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -123,27 +119,6 @@ public class PrimaryController implements Initializable {
        
         f1.setBebida(bebidaBox.getValue());
         f1.setComida(comidaBox.getValue());
-        
-        int selected = 0;
-        if(entregadoCheck.isSelected()){
-            selected = 1;
-        }
-        
-        f1.conexionBD();
-        Connection conexion = DriverManager.getConnection(f1.getUrl(), f1.getUser(), f1.getPassword());
-        
-        PreparedStatement ps = conexion.prepareStatement("INSERT INTO comandasdesayunos VALUES ("
-            + "'" + id + "', "
-            + "'" + comidaBox.getValue() + "', "
-            + "'" + bebidaBox.getValue() + "', "
-            + "'" + clientName.getText() + "', "
-            + "'" + f1.getPrecioPedido() + "', "
-            + "'" + selected + "', "
-            + "'" + currentDate + "', "
-            + " )");
-        
-        ps.executeUpdate();
-        conexion.close();
         
         Pedidos p = new Pedidos(
             id, bebidaBox.getValue(), comidaBox.getValue(), clientName.getText(), 
